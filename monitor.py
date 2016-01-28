@@ -8,35 +8,30 @@ import glob
 
 # global variables
 speriod=(15*60)-1
-dbname='/var/www/templog.db'
-
+#dbname='/var/www/templog.db'
+dbname='/var/www/html/templogmulti.db'
 
 
 # store the temperature in the database
-def log_temperature(temp):
-
+def log_temperature(temp1,temp2,temp3 ):
     conn=sqlite3.connect(dbname)
     curs=conn.cursor()
-
-    curs.execute("INSERT INTO temps values(datetime('now'), (?))", (temp,))
-
+    curs.execute("INSERT INTO temps values(datetime('now'), (?), (?), (?))", (temp1,temp2,temp3))
     # commit the changes
     conn.commit()
-
     conn.close()
 
 
 # display the contents of the database
 def display_data():
-
+    print "Checking DB..."
     conn=sqlite3.connect(dbname)
     curs=conn.cursor()
 
     for row in curs.execute("SELECT * FROM temps"):
-        print str(row[0])+"	"+str(row[1])
+        print str(row[0])+"	"+str(row[1]) +" | "+str(row[2]) +" | "+str(row[3]) 
 
     conn.close()
-
 
 
 # get temerature
@@ -80,33 +75,34 @@ def main():
         return None
     else:
         # append /w1slave to the device file
-        w1devicefile = devicelist[0] + '/w1_slave'
+        w1devicefile1 = devicelist[0] + '/w1_slave'
+        w1devicefile2 = devicelist[1] + '/w1_slave'
+        w1devicefile3 = devicelist[2] + '/w1_slave'
 
 
-#    while True:
+    # get the temperatureS from the device fileS
+    temperature1 = get_temp(w1devicefile1)
+    temperature2 = get_temp(w1devicefile2)
+    temperature3 = get_temp(w1devicefile3)
 
-    # get the temperature from the device file
-    temperature = get_temp(w1devicefile)
-    if temperature != None:
-        print "temperature="+str(temperature)
+    if temperature1 != None or temperature2 != None or temperature3 != None:
+        print "|"+str(temperature1) + " | " +str(temperature2) + " | "+str(temperature3) + " | "
     else:
         # Sometimes reads fail on the first attempt
         # so we need to retry
-        temperature = get_temp(w1devicefile)
-        print "temperature="+str(temperature)
-
+        temperature1 = get_temp(w1devicefile1)
+        temperature2 = get_temp(w1devicefile2)
+        temperature3 = get_temp(w1devicefile3)
+        print "|"+str(temperature1) + " | " +str(temperature2) + " | "+str(temperature3) + " | "
         # Store the temperature in the database
-    log_temperature(temperature)
+    
+    log_temperature(temperature1, temperature2, temperature3 )
 
-        # display the contents of the database
-#        display_data()
+    # display the contents of the database
+    display_data()
 
-#        time.sleep(speriod)
 
 
 if __name__=="__main__":
     main()
-
-
-
 

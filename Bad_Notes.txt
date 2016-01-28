@@ -1,0 +1,53 @@
+sudo touch templogmulti.db
+
+sudo sqlite3 templogmulti.db
+
+BEGIN;
+CREATE TABLE temps (timestamp DATETIME, temp1 NUMERIC, temp2 NUMERIC, temp3 NUMERIC);
+COMMIT;
+
+
+sudo cp templogmulti.db /var/www/html/
+sudo chown www-data:www-data /var/www/html/templogmulti.db 
+
+sudo chown www-data:www-data hello.py
+
+
+sudo cp monitor.py /usr/lib/cgi-bin/
+sudo chown www-data:www-data /usr/lib/cgi-bin/monitor.py
+
+sudo cp webgui.py /usr/lib/cgi-bin/
+
+sudo crontab -u www-data -e
+sudo crontab -u www-data -l
+
+sudo crontab -u root -e
+
+>> /home/pi/py/cron.log
+
+sudo cp webgui.py /var/www/html/
+sudo chown www-data:www-data /var/www/html/webgui.py
+
+
+
+sudo service apache2 reload
+
+systemctl status apache2.service
+' and '
+v
+ for details.
+
+ 
+ 
+ ln -s /path/to/file /path/to/symlink
+ 
+ ln -s /etc/apache2/conf-available/serve-cgi-bin.conf /etc/apache2/conf-enabled/serve-cgi-bin.conf
+ 
+ 
+sudo ln -s /etc/apache2/mods-available/cgi.load /etc/apache2/mods-enabled/
+sudo ln -s /etc/apache2/mods-available/cgid.conf /etc/apache2/mods-enabled/
+sudo ln -s /etc/apache2/mods-available/cgid.load /etc/apache2/mods-enabled/
+ 
+cgi.load
+cgid.conf
+cgid.load

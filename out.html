@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>
+Raspberry Pi Temperature Logger
+    </title>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Temperature'],
+['2016-01-28 08:32:27', 29.687],
+['2016-01-28 08:32:39', 29.75],
+['2016-01-28 08:33:36', 29.687],
+['2016-01-28 09:07:41', 29.5],
+['2016-01-28 09:08:50', 29.5],
+['2016-01-28 09:09:44', 29.5],
+['2016-01-28 09:11:08', 29.437],
+['2016-01-28 09:12:38', 29.5],
+['2016-01-28 10:28:13', 29.625],
+['2016-01-28 11:27:04', 29.812],
+['2016-01-28 11:28:05', 29.75],
+['2016-01-28 11:29:05', 29.625],
+['2016-01-28 11:30:04', 29.562],
+['2016-01-28 11:31:04', 29.687],
+['2016-01-28 11:32:05', 29.75],
+['2016-01-28 11:33:04', 29.562],
+['2016-01-28 11:34:04', 29.562],
+['2016-01-28 11:35:05', 29.687],
+['2016-01-28 21:36:05', 29.687],
+['2016-01-28 21:36:37', 29.75],
+['2016-01-28 21:37:04', 29.75],
+['2016-01-28 21:38:04', 29.687],
+['2016-01-28 21:39:05', 29.687],
+['2016-01-28 21:40:04', 29.75],
+['2016-01-28 21:41:05', 29.687]
+
+        ]);
+
+        var options = {
+          title: 'Temperature'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+<h1>Raspberry Pi Temperature Logger</h1>
+<hr>
+<form action="/cgi-bin/webgui.py" method="POST">
+        Show the temperature logs for
+        <select name="timeinterval">
+<option value="6">the last 6 hours</option>
+<option value="12">the last 12 hours</option>
+<option value="24" selected="selected">the last 24 hours</option>
+        </select>
+        <input type="submit" value="Display">
+    </form>
+<h2>Temperature Chart</h2>
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<hr>
+<h2>Minumum temperature&nbsp</h2>
+2016-01-28 09:11:08&nbsp&nbsp&nbsp29.437C
+<h2>Maximum temperature</h2>
+2016-01-28 11:27:04&nbsp&nbsp&nbsp29.812C
+<h2>Average temperature</h2>
+29.621C
+<hr>
+<h2>In the last hour:</h2>
+<table>
+<tr><td><strong>Date/Time</strong></td><td><strong>Temperature</strong></td></tr>
+</table>
+<hr>
+</body>
+</html>

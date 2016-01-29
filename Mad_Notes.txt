@@ -8,13 +8,20 @@ COMMIT;
 
 
 sudo cp templogmulti.db /var/www/html/
-sudo chown www-data:www-data /var/www/html/templogmulti.db 
+sudo chown www-data:www-data /var/www/html/s.db 
 
 sudo chown www-data:www-data hello.py
+sudo chown pi inddex.php
+
+
+sudo cp /var/www/html/text.py /usr/lib/cgi-bin/text.py
 
 
 sudo cp monitor.py /usr/lib/cgi-bin/
 sudo chown www-data:www-data /usr/lib/cgi-bin/monitor.py
+
+sudo chown www-data:www-data ~/www2
+sudo chown pi:pi ~/www2
 
 sudo cp webgui.py /usr/lib/cgi-bin/
 
@@ -29,7 +36,7 @@ sudo cp webgui.py /var/www/html/
 sudo chown www-data:www-data /var/www/html/webgui.py
 
 
-
+sudo /etc/init.d/apache2 restart
 sudo service apache2 reload
 
 systemctl status apache2.service
@@ -51,3 +58,31 @@ sudo ln -s /etc/apache2/mods-available/cgid.load /etc/apache2/mods-enabled/
 cgi.load
 cgid.conf
 cgid.load
+
+
+
+
+
+ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+<directory "/usr/lib/cgi-bin">
+	AllowOverride None
+	Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+	Order allow,deny
+	Allow from all
+	AddHandler cgi-script .py
+	Require all granted
+</directory>
+
+
+Alias /t "/home/pi/www2/" 
+
+<Directory "/home/pi/www2/">
+	Options Indexes FollowSymLinks +ExecCGI
+	AddHandler cgi-script .cgi .py
+	Order Allow, Deny
+	Allow from All
+</Directory>
+
+
+
+

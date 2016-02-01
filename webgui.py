@@ -77,14 +77,11 @@ def print_graph_script(table):
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Time', 'Temperature'],
-%s
+          ['Time', 'Temperature'], %s
         ]);
-
         var options = {
           title: 'Temperature'
         };
-
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
@@ -99,7 +96,6 @@ def print_graph_script(table):
 def show_graph():
     print "<h2>Temperature Chart</h2>"
     print '<div id="chart_div" style="width: 900px; height: 500px;"></div>'
-
 
 
 # connect to the db and show some stats
@@ -142,8 +138,7 @@ def show_stats(option):
     print "<table>"
     print "<tr><td><strong>Date/Time</strong></td><td><strong>Temperature</strong></td></tr>"
 
-    rows=curs.execute("SELECT * FROM temps WHERE timestamp>datetime('new','-1 hour') AND timestamp<=datetime('new')")
-#    rows=curs.execute("SELECT * FROM temps WHERE timestamp>datetime('2013-09-19 21:30:02','-1 hour') AND timestamp<=datetime('2013-09-19 21:31:02')")
+    rows=curs.execute("SELECT * FROM temps WHERE timestamp>datetime('now','-1 hour') AND timestamp<=datetime('now')")
     for row in rows:
         rowstr="<tr><td>{0}&emsp;&emsp;</td><td>{1}C</td></tr>".format(str(row[0]),str(row[1]))
         print rowstr
@@ -212,8 +207,6 @@ def get_option():
         return validate_input (option)
     else:
         return None
-
-
 
 
 # main function

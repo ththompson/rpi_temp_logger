@@ -7,11 +7,15 @@ CREATE TABLE temps (timestamp DATETIME, temp1 NUMERIC, temp2 NUMERIC, temp3 NUME
 COMMIT;
 
 
+DELETE FROM temps WHERE timestamp < '2016-01-29 00:00:00'
+
+
 sudo cp templogmulti.db /var/www/html/
 sudo chown www-data:www-data /var/www/html/s.db 
 
 sudo chown www-data:www-data hello.py
-sudo chown pi inddex.php
+sudo chown pi index.php
+sudo chown pi:pi getData.php
 
 
 sudo cp /var/www/html/text.py /usr/lib/cgi-bin/text.py
